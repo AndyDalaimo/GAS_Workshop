@@ -89,7 +89,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		}
 	}
 
-	const FTopLevelAssetPath EnumName("/Script/GAS_Workshop.EAbilitySlotsEnum");
+	const FTopLevelAssetPath EnumName("/Script/GAS_Workshop.EWorkshopAbilitySlotsEnum");
 	FGameplayAbilityInputBinds Binds("IA_ConfirmTargeting", "IA_CancelTargeting", EnumName);
 	WorkshopAbilitySystemComp->BindAbilityActivationToInputComponent(PlayerInputComponent, Binds);
 

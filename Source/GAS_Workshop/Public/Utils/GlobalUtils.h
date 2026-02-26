@@ -5,11 +5,10 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class EAbilitySlotsEnum : uint8
+enum class EWorkshopAbilitySlotsEnum : uint8
 {
 	IA_PrimaryAbility,
 	IA_SecondaryAbility,
-	IA_UltimateAbility,
 };
 
 /**

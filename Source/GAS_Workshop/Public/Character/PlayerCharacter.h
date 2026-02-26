@@ -8,12 +8,12 @@
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
 
-UENUM(BlueprintType)
-enum class EWorkshopAbilitySlotsEnum : uint8
-{
-	IA_PrimaryAbility,
-	IA_SecondaryAbility,
-};
+//UENUM(BlueprintType)
+//enum class EWorkshopAbilitySlotsEnum : uint8
+//{
+//	IA_PrimaryAbility,
+//	IA_SecondaryAbility,
+//};
 
 class USpringArmComponent;
 class UCameraComponent;
