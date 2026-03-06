@@ -47,6 +47,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Initialize AbiltiySystemComp
 	if (WorkshopAbilitySystemComp)
 	{
 		WorkshopAbilitySystemComp->InitAbilityActorInfo(this, this);
