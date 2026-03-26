@@ -5,15 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Framework/Interfaces/ASC_Interaction.h"
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
-
-//UENUM(BlueprintType)
-//enum class EWorkshopAbilitySlotsEnum : uint8
-//{
-//	IA_PrimaryAbility,
-//	IA_SecondaryAbility,
-//};
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -21,7 +15,7 @@ class UInputMappingContext;
 class UInputAction;
 
 UCLASS()
-class GAS_WORKSHOP_API APlayerCharacter : public ACharacter, public IAbilitySystemInterface
+class GAS_WORKSHOP_API APlayerCharacter : public ACharacter, public IAbilitySystemInterface, public IASC_Interaction
 {
 	GENERATED_BODY()
 
@@ -77,5 +71,8 @@ public:
 
 	// Get ASC from Player
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	// Get ASC from Base Actor class with ASC_Interaction Interface (BP Native Event)
+	virtual UAbilitySystemComponent* GetActorAbilitySystemComponent_Implementation() override;
 
 };

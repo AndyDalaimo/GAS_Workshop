@@ -138,3 +138,9 @@ UAbilitySystemComponent* APlayerCharacter::GetAbilitySystemComponent() const
 	return WorkshopAbilitySystemComp;
 }
 
+UAbilitySystemComponent* APlayerCharacter::GetActorAbilitySystemComponent_Implementation()
+{
+	return WorkshopAbilitySystemComp;
+}
+
+
