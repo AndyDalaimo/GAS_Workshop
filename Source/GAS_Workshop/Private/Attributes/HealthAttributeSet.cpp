@@ -67,12 +67,14 @@ void UHealthAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 			const float DamageNumber = OldHealthValue - NewHealthValue;
 			if (UAbilitySystemComponent* OwningAbilitySystemComponent = GetValid(GetOwningAbilitySystemComponent()))
 			{
+			
 				// Broadcast a 'damage number' gameplay cue on the owning actor. Triggered on server, executes on all clients
 				const FGameplayTag DamageCueTag = FGameplayTag::RequestGameplayTag(FName("GameplayCue.DamageNumber"), true);
 				FGameplayCueParameters DamageCueParams;
 				DamageCueParams.NormalizedMagnitude = 1.f;
 				DamageCueParams.RawMagnitude = DamageNumber;
 				OwningAbilitySystemComponent->ExecuteGameplayCue(DamageCueTag, DamageCueParams);
+
 			}
 		}
 

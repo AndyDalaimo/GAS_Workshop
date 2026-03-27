@@ -31,6 +31,8 @@ void AGameplayEffectTriggerVolume::BeginPlay()
 
 }
 
+
+
 // Called every frame
 void AGameplayEffectTriggerVolume::Tick(float DeltaTime)
 {
@@ -38,6 +40,7 @@ void AGameplayEffectTriggerVolume::Tick(float DeltaTime)
 
 }
 
+// Only apply effects to Actors with Ability System Components
 bool AGameplayEffectTriggerVolume::CanEffectCharacter(AActor* Actor) const
 {
 	if (Actor->Implements<UASC_Interaction>())
@@ -58,12 +61,71 @@ void AGameplayEffectTriggerVolume::OverlapStarted(UPrimitiveComponent* Overlappe
 	if (CanEffectCharacter(OtherActor))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("%s Actor's ASC can be effected."), *FString(OtherActor->GetName()));
+
+		ApplyEffectTo(OtherActor);
+		bIsActive = false;
+
+		// Trigger Gameplay Cues, etc. 
+		K2_OnOverlapped();
 	}
 }
 
 void AGameplayEffectTriggerVolume::OverlapEnded(UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	if (EffectUpdateOnExit == ERemoveEffectOnExit::RemoveEffect && OtherActor->Implements<UASC_Interaction>()) RemoveEffectFrom(OtherActor);
+	if (!bIsActive)
+	{
+		bIsActive = true;
 
+		// Trigger Gameplay Cues, etc.
+		K2_OnExited();
+	}
+}
+
+// ------------------------------------------------------------------------
+// ------- Event Functions to call and Apply/Remove Gameplay Effects ------
+// ------------------------------------------------------------------------
+
+// If Actor can be effected (Does not have Ignore Tags) Apply effects to their according ASC
+void AGameplayEffectTriggerVolume::ApplyEffectTo(AActor* Actor)
+{
+	UAbilitySystemComponent* ASC = IASC_Interaction::Execute_GetActorAbilitySystemComponent(Actor);
+	if (!ASC)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Actor's ASC is null."), *FString(Actor->GetName()));
+		return;
+	}
+
+	// Create Gameplay Effect Context to add to Actor
+	FGameplayEffectContextHandle EffectContext = ASC->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	// Add Gameplay Effects to ASC of interacting Actor
+	for (TSubclassOf<UGameplayEffect> EffectClass : EffectClasses)
+	{
+		if (!EffectClass) continue;
+
+		FGameplayEffectSpecHandle NewHandle = ASC->MakeOutgoingSpec(EffectClass, 0.f, EffectContext);
+		ASC->ApplyGameplayEffectSpecToSelf(*NewHandle.Data.Get());
+	}
+}
+
+// Remove Effect from Actor IF this Volume is tagged with RemoveOnExit::RemoveEffect
+void AGameplayEffectTriggerVolume::RemoveEffectFrom(AActor* Actor)
+{
+	UAbilitySystemComponent* ASC = IASC_Interaction::Execute_GetActorAbilitySystemComponent(Actor);
+	if (!ASC)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s Actor's ASC is null."), *FString(Actor->GetName()));
+		return;
+	}
+
+	for (TSubclassOf<UGameplayEffect> EffectClass : EffectClasses)
+	{
+		if (!EffectClass) continue;
+
+		ASC->RemoveActiveGameplayEffectBySourceEffect(EffectClass, nullptr, 1);
+	}
 }
 

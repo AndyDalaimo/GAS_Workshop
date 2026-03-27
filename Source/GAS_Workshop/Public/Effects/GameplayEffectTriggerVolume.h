@@ -60,6 +60,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// -------------------------------------------
+	// - Helper Functions for Actor Interactions -
+	// -------------------------------------------
+
+	virtual void ApplyEffectTo(AActor* Actor);
+	virtual void RemoveEffectFrom(AActor* Actor);
+
+	UFUNCTION(BlueprintImplementableEvent, Meta = (DisplayName = "OnOverlapped"))
+	void K2_OnOverlapped();
+
+	UFUNCTION(BlueprintImplementableEvent, Meta = (DisplayName = "OnExited"))
+	void K2_OnExited();
+
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

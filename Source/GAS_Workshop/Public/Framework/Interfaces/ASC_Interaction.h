@@ -24,6 +24,6 @@ class GAS_WORKSHOP_API IASC_Interaction
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 
-	UFUNCTION(BlueprintCallable, BlueprintNativeEventt, Category = ASC_Interaction)
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
 	UAbilitySystemComponent* GetActorAbilitySystemComponent();
 };
