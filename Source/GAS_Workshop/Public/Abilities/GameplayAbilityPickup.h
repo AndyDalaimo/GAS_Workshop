@@ -34,6 +34,9 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability Pickup Properties")
 	bool bClearAbility = true;
 
+	UPROPERTY(BlueprintReadOnly)
+	AActor* ActorToGrantAbilityTo;
+
 	
 public:	
 	// Sets default values for this actor's properties
@@ -60,6 +63,7 @@ protected:
 	// - Helper Functions for Actor Interactions -
 	// -------------------------------------------
 
+	UFUNCTION(BlueprintCallable)
 	virtual void GrantAbilityTo(AActor* Actor);
 
 	UFUNCTION(BlueprintImplementableEvent, Meta = (DisplayName = "OnOverlapped"))

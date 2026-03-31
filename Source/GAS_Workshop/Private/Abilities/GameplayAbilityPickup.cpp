@@ -59,7 +59,8 @@ void AGameplayAbilityPickup::OverlapStarted(UPrimitiveComponent* OverlappedCompo
 {
 	if (CanGrantAbilityToActor(OtherActor))
 	{
-		GrantAbilityTo(OtherActor);
+		ActorToGrantAbilityTo = OtherActor;
+		// GrantAbilityTo(OtherActor);
 
 		// Trigger Gameplay Cues, etc. 
 		K2_OnOverlapped();
@@ -69,6 +70,7 @@ void AGameplayAbilityPickup::OverlapStarted(UPrimitiveComponent* OverlappedCompo
 void AGameplayAbilityPickup::OverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	ActorToGrantAbilityTo = nullptr;
 	// Trigger Gameplay Cues, etc. 
 	K2_OnExited();
 
