@@ -15,6 +15,8 @@ ANPCCharacter::ANPCCharacter()
 	WorkshopAbilitySystemComp = CreateDefaultSubobject<UWorkshopAbilitySystemComponent>(TEXT("ASC"));
 	HealthSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthSet"));
 
+	RestrictedHealthTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
+
 }
 
 // Called when the game starts or when spawned
@@ -47,5 +49,15 @@ void ANPCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 UAbilitySystemComponent* ANPCCharacter::GetAbilitySystemComponent() const
 {
 	return WorkshopAbilitySystemComp;
+}
+
+UAbilitySystemComponent* ANPCCharacter::GetActorAbilitySystemComponent_Implementation()
+{
+	return WorkshopAbilitySystemComp;
+}
+
+FGameplayTagContainer ANPCCharacter::GetActorRestrictedTags_Implementation()
+{
+	return RestrictedHealthTags;
 }
 

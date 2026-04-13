@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AttributeSet.h"
+#include "Framework/Interfaces/ASC_Interaction.h"
 #include "AbilitySystemComponent.h"
 #include "HealthAttributeSet.generated.h"
 
@@ -20,7 +21,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttributeChangedEvent, UAttribut
  * 
  */
 UCLASS()
-class GAS_WORKSHOP_API UHealthAttributeSet : public UAttributeSet
+class GAS_WORKSHOP_API UHealthAttributeSet : public UAttributeSet, public IASC_Interaction
 {
 	GENERATED_BODY()
 
@@ -36,6 +37,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth)
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UHealthAttributeSet, MaxHealth);
+
 
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostAttributeChange(const FGameplayAttribute& Attribute, float OldValue, float NewValue) override;

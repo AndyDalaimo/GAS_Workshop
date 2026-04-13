@@ -40,6 +40,7 @@ APlayerCharacter::APlayerCharacter()
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
+	RestrictedHealthTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
 }
 
 // Called when the game starts or when spawned
@@ -141,6 +142,11 @@ UAbilitySystemComponent* APlayerCharacter::GetAbilitySystemComponent() const
 UAbilitySystemComponent* APlayerCharacter::GetActorAbilitySystemComponent_Implementation()
 {
 	return WorkshopAbilitySystemComp;
+}
+
+FGameplayTagContainer APlayerCharacter::GetActorRestrictedTags_Implementation()
+{
+	return RestrictedHealthTags;
 }
 
 

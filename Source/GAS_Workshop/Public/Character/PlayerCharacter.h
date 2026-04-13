@@ -56,6 +56,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* JumpAction;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = RestrictedTags)
+	FGameplayTagContainer RestrictedHealthTags;
+
 	/** Handles movement input */
 	void Move(const FInputActionValue& Value);
 
@@ -74,5 +77,7 @@ public:
 
 	// Get ASC from Base Actor class with ASC_Interaction Interface (BP Native Event)
 	virtual UAbilitySystemComponent* GetActorAbilitySystemComponent_Implementation() override;
+
+	virtual FGameplayTagContainer GetActorRestrictedTags_Implementation() override;
 
 };

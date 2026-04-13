@@ -7,6 +7,8 @@
 #include "AbilitySystemComponent.h"
 #include "ASC_Interaction.generated.h"
 
+struct FGameplayTagContainer;
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UASC_Interaction : public UInterface
@@ -26,4 +28,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
 	UAbilitySystemComponent* GetActorAbilitySystemComponent();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
+	FGameplayTagContainer GetActorRestrictedTags();
 };
