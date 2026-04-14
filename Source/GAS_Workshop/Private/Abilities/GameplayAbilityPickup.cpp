@@ -82,7 +82,7 @@ void AGameplayAbilityPickup::GrantAbilityTo(AActor* Actor)
 	if (!AbilityToGrantActor) return;
 
 	UAbilitySystemComponent* ActorASC = IASC_Interaction::Execute_GetActorAbilitySystemComponent(Actor);
-	if (bClearAbility)
+	if (bClearExistingAbility)
 	{
 		ActorASC->ClearAllAbilitiesWithInputID(static_cast<int>(InputIDOverride));
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityToGrantActor, 1, static_cast<int>(InputIDOverride));

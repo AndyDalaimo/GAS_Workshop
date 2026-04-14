@@ -32,7 +32,10 @@ protected:
 	EWorkshopAbilitySlotsEnum InputIDOverride;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability Pickup Properties")
-	bool bClearAbility = true;
+	bool bClearExistingAbility = true;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Ability Pickup Properties")
+	FName AbilityName;
 
 	UPROPERTY(BlueprintReadOnly)
 	AActor* ActorToGrantAbilityTo;
