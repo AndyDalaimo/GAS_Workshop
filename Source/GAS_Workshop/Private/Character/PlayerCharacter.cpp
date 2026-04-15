@@ -12,6 +12,7 @@
 #include "Framework/WorkshopAbilitySystemComponent.h"
 #include "Attributes/HealthAttributeSet.h"
 
+
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
@@ -21,6 +22,8 @@ APlayerCharacter::APlayerCharacter()
 	// Create ASC and attach a default Attribute Set (Health)
 	WorkshopAbilitySystemComp = CreateDefaultSubobject<UWorkshopAbilitySystemComponent>(TEXT("ASC"));
 	HealthSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthSet"));
+	MovementSet = CreateDefaultSubobject<UMovementAttributeSet>(TEXT("MovementSet"));
+
 
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
@@ -126,6 +129,8 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+
+
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
@@ -149,4 +154,65 @@ FGameplayTagContainer APlayerCharacter::GetActorRestrictedTags_Implementation()
 	return RestrictedHealthTags;
 }
 
+// ---------------------------------------------------------------------------------------------------
+// ------------------------------- On Player's Attributes Changed ------------------------------------
+// ---------------------------------------------------------------------------------------------------
 
+void APlayerCharacter::OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+{
+	GetCharacterMovement()->MaxWalkSpeed = GetMovementSpeedAttribute();
+}
+
+void APlayerCharacter::OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+{
+	//SprintStamina = GetStaminaAttribute();
+}
+
+void APlayerCharacter::OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+{
+
+}
+
+void APlayerCharacter::OnJumpPowerAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+{
+}
+
+float APlayerCharacter::GetMovementSpeedAttribute() const
+{
+	if (IsValid(MovementSet) == false)
+	{
+		return 0.0f;
+	}
+
+	return MovementSet->GetMovementSpeed();
+}
+
+float APlayerCharacter::GetStaminaAttribute() const
+{
+	if (IsValid(MovementSet) == false)
+	{
+		return 0.0f;
+	}
+
+	return MovementSet->GetStamina();
+}
+
+float APlayerCharacter::GetSprintSpeedAttribute() const
+{
+	if (IsValid(MovementSet) == false)
+	{
+		return 0.0f;
+	}
+
+	return MovementSet->GetSprintSpeed();
+}
+
+float APlayerCharacter::GetJumpPowerAttribute() const
+{
+	if (IsValid(MovementSet) == false)
+	{
+		return 0.0f;
+	}
+
+	return MovementSet->GetJumpPower();
+}

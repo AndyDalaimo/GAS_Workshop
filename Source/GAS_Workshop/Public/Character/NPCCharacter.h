@@ -23,6 +23,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
 	TObjectPtr<class UHealthAttributeSet> HealthSet;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
+	TObjectPtr<class UMovementAttributeSet> MovementSet;
+
 
 protected:
 	// Called when the game starts or when spawned

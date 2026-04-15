@@ -5,6 +5,7 @@
 
 #include "Framework/WorkshopAbilitySystemComponent.h"
 #include "Attributes/HealthAttributeSet.h"
+#include "Attributes/MovementAttributeSet.h"
 
 // Sets default values
 ANPCCharacter::ANPCCharacter()
@@ -14,6 +15,7 @@ ANPCCharacter::ANPCCharacter()
 
 	WorkshopAbilitySystemComp = CreateDefaultSubobject<UWorkshopAbilitySystemComponent>(TEXT("ASC"));
 	HealthSet = CreateDefaultSubobject<UHealthAttributeSet>(TEXT("HealthSet"));
+	MovementSet = CreateDefaultSubobject<UMovementAttributeSet>(TEXT("MovementSet"));
 
 	RestrictedHealthTags.AddTag(FGameplayTag::RequestGameplayTag(FName("State.Dead")));
 

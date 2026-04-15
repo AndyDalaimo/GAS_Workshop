@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
+#include "Attributes/MovementAttributeSet.h"
 #include "Framework/Interfaces/ASC_Interaction.h"
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
@@ -28,6 +29,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
 	TObjectPtr<class UHealthAttributeSet> HealthSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
+	TObjectPtr<class UMovementAttributeSet> MovementSet;
 
 
 
@@ -65,12 +69,38 @@ protected:
 	/** Handles look input */
 	void Look(const FInputActionValue& Value);
 
+	// Character Movement Attribute Changes
+	void OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+	void OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+	void OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+	void OnJumpPowerAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+
+	UFUNCTION(BlueprintPure)
+	float GetMovementSpeedAttribute() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetStaminaAttribute() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetSprintSpeedAttribute() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetJumpPowerAttribute() const;
+
+
+	// Movement Attribute Changes reflected on Character custom properties
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = MovementProperties)
+	float SprintStamina;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = MovementProperties)
+	float SprintSpeed;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 
 	// Get ASC from Player
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
