@@ -33,6 +33,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
 	TObjectPtr<class UMovementAttributeSet> MovementSet;
 
+	// Movement Attribute Changes reflected on Character custom properties
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MovementProperties")
+	float Stamina;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MovementProperties")
+	float SprintSpeed;
+
 
 
 protected:
@@ -71,9 +78,11 @@ protected:
 
 	// Character Movement Attribute Changes
 	void OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
-	void OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
-	void OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+	void OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData);
+	void OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData);
 	void OnJumpPowerAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
+
+	void SetupMovementAttributeChanges();
 
 	UFUNCTION(BlueprintPure)
 	float GetMovementSpeedAttribute() const;
@@ -88,11 +97,6 @@ protected:
 	float GetJumpPowerAttribute() const;
 
 
-	// Movement Attribute Changes reflected on Character custom properties
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = MovementProperties)
-	float SprintStamina;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = MovementProperties)
-	float SprintSpeed;
 
 public:	
 	// Called every frame

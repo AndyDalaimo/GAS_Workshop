@@ -109,6 +109,12 @@ void AGameplayEffectTriggerVolume::ApplyEffectTo(AActor* Actor)
 		FGameplayEffectSpecHandle NewHandle = ASC->MakeOutgoingSpec(EffectClass, 0.f, EffectContext);
 		ASC->ApplyGameplayEffectSpecToSelf(*NewHandle.Data.Get());
 	}
+
+	// Apply these tags to Actor if specified
+	if (!ApplyToActorTags.IsEmpty())
+	{
+		ASC->AddLooseGameplayTags(ApplyToActorTags);
+	}
 }
 
 // Remove Effect from Actor IF this Volume is tagged with RemoveOnExit::RemoveEffect
@@ -124,6 +130,7 @@ void AGameplayEffectTriggerVolume::RemoveEffectFrom(AActor* Actor)
 	for (TSubclassOf<UGameplayEffect> EffectClass : EffectClasses)
 	{
 		if (!EffectClass) continue;
+		UE_LOG(LogTemp, Warning, TEXT("%s Effect Removed"), *FString(EffectClass->GetName()));
 
 		ASC->RemoveActiveGameplayEffectBySourceEffect(EffectClass, nullptr, 1);
 	}

@@ -9,7 +9,9 @@
 
 UMovementAttributeSet::UMovementAttributeSet()
 {
-	InitMovementSpeed(600.f); // Default Character Movement Comp Max Walk Speed
+	InitMovementSpeed(600.f); // Current Character Movement Comp Max Walk Speed
+	InitDefaultMovementSpeed(600.f);
+	InitMaxMovementSpeed(1200.f);
 	InitStamina(100.f);
 	InitMaxStamina(100.f);
 	InitSprintSpeed(250.f); // This speed will add to Current Movement Speed
@@ -20,9 +22,13 @@ UMovementAttributeSet::UMovementAttributeSet()
 // Rules defined for attibutes before they are changed / replicated. i.e. Clamp Health value between min-max.
 void UMovementAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PreChange: Movement Attribute '%s"), *Attribute.AttributeName);
+	UE_LOG(LogTemp, Warning, TEXT("PreChange: Movement Attribute '%s'"), *Attribute.AttributeName);
 
-	if (Attribute == GetStaminaAttribute())
+	if (Attribute == GetMovementSpeedAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 100.f, GetMaxMovementSpeed()); // Clamp to min-max walk speed
+	}
+	else if (Attribute == GetStaminaAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxStamina()); // Clamp Stamina between Stamina and Character's Max
 	}
@@ -69,6 +75,19 @@ void UMovementAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 	if (Data.EvaluatedData.Attribute == GetMovementSlowAttribute())
 	{
 		// Convert into -Speed and -JumpPower and then clamp
+		const float SlowValue = GetMovementSlow();
+		const float OldMovementSpeedValue = GetMovementSpeed();
+		const float NewMovementSpeedValue = FMath::Clamp(OldMovementSpeedValue - SlowValue, 100.f, GetMaxMovementSpeed());
+
+		if (UAbilitySystemComponent* OwningAbilitySystemComponent = GetValid(GetOwningAbilitySystemComponent()))
+		{
+			if (OldMovementSpeedValue != NewMovementSpeedValue)
+			{
+				// Set New Max Walk Speed on Character 
+				SetMovementSpeed(NewMovementSpeedValue);
+			}
+		}
+
 	}
 }
 
@@ -92,6 +111,22 @@ void UMovementAttributeSet::OnRep_MovementSpeed(const FGameplayAttributeData& Ol
 	const float OldMovementSpeed = OldValue.GetCurrentValue();
 	const float NewMovementSpeed = GetMovementSpeed();
 	OnMovementSpeedChanged.Broadcast(this, OldMovementSpeed, NewMovementSpeed);
+}
+
+void UMovementAttributeSet::OnRep_DefaultMovementSpeed(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMovementAttributeSet, MaxMovementSpeed, OldValue);
+
+	const float CurrentMovementSpeed = GetMovementSpeed();
+	OnDefaultMovementSpeedChanged.Broadcast(this, CurrentMovementSpeed, CurrentMovementSpeed);
+}
+
+void UMovementAttributeSet::OnRep_MaxMovementSpeed(const FGameplayAttributeData& OldValue)
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UMovementAttributeSet, MaxMovementSpeed, OldValue);
+
+	const float CurrentMovementSpeed = GetMovementSpeed();
+	OnMaxMovementSpeedChanged.Broadcast(this, CurrentMovementSpeed, CurrentMovementSpeed);
 }
 
 void UMovementAttributeSet::OnRep_Stamina(const FGameplayAttributeData& OldValue)

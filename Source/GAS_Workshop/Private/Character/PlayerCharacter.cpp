@@ -55,6 +55,11 @@ void APlayerCharacter::BeginPlay()
 	if (WorkshopAbilitySystemComp)
 	{
 		WorkshopAbilitySystemComp->InitAbilityActorInfo(this, this);
+
+		if (HasAuthority())
+		{
+			SetupMovementAttributeChanges();
+		}
 	}
 
 	// Add Enhanced Input Mapping Context
@@ -158,24 +163,36 @@ FGameplayTagContainer APlayerCharacter::GetActorRestrictedTags_Implementation()
 // ------------------------------- On Player's Attributes Changed ------------------------------------
 // ---------------------------------------------------------------------------------------------------
 
+void APlayerCharacter::SetupMovementAttributeChanges()
+{
+	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetMovementSpeedAttribute()).AddUObject(this, &APlayerCharacter::OnMovementSpeedAttributeChanged);
+	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetStaminaAttribute()).AddUObject(this, &APlayerCharacter::OnStaminaAttributeChanged);
+	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetSprintSpeedAttribute()).AddUObject(this, &APlayerCharacter::OnSprintSpeedAttributeChanged);
+	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetJumpPowerAttribute()).AddUObject(this, &APlayerCharacter::OnJumpPowerAttributeChanged);
+}
+
+
 void APlayerCharacter::OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
 {
 	GetCharacterMovement()->MaxWalkSpeed = GetMovementSpeedAttribute();
 }
 
-void APlayerCharacter::OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+void APlayerCharacter::OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) 
 {
-	//SprintStamina = GetStaminaAttribute();
+	Stamina = GetStaminaAttribute();
 }
 
-void APlayerCharacter::OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
+void APlayerCharacter::OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) 
 {
-
+	SprintSpeed = GetSprintSpeedAttribute();
 }
 
 void APlayerCharacter::OnJumpPowerAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const
 {
+	GetCharacterMovement()->JumpZVelocity = GetJumpPowerAttribute();
 }
+
+
 
 float APlayerCharacter::GetMovementSpeedAttribute() const
 {

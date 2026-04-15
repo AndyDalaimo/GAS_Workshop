@@ -34,6 +34,14 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_MovementSpeed, meta = (HideFromModifiers))
 	FGameplayAttributeData MovementSpeed;
 	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, MovementSpeed);
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_DefaultMovementSpeed, meta = (HideFromModifiers))
+	FGameplayAttributeData DefaultMovementSpeed;
+	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, DefaultMovementSpeed);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMovementSpeed)
+	FGameplayAttributeData MaxMovementSpeed;
+	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, MaxMovementSpeed);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_Stamina)
 	FGameplayAttributeData Stamina;
@@ -59,6 +67,10 @@ public:
 	UFUNCTION()
 	void OnRep_MovementSpeed(const FGameplayAttributeData& OldValue);
 	UFUNCTION()
+	void OnRep_DefaultMovementSpeed(const FGameplayAttributeData& OldValue);
+	UFUNCTION()
+	void OnRep_MaxMovementSpeed(const FGameplayAttributeData& OldValue);
+	UFUNCTION()
 	void OnRep_Stamina(const FGameplayAttributeData& OldValue);
 	UFUNCTION()
 	void OnRep_MaxStamina(const FGameplayAttributeData& OldValue);
@@ -69,6 +81,12 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FMovementAttributeChangedEvent OnMovementSpeedChanged;
+	
+	UPROPERTY(BlueprintAssignable)
+	FMovementAttributeChangedEvent OnDefaultMovementSpeedChanged;
+	
+	UPROPERTY(BlueprintAssignable)
+	FMovementAttributeChangedEvent OnMaxMovementSpeedChanged;
 
 	UPROPERTY(BlueprintAssignable)
 	FMovementAttributeChangedEvent OnStaminaChanged;

@@ -29,6 +29,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
 		FGameplayTagContainer IgnoredTags;
+		
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
+		FGameplayTagContainer ApplyToActorTags;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
 		TArray<TSubclassOf<class UGameplayEffect>> EffectClasses;
