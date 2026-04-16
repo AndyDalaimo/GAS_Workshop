@@ -87,7 +87,6 @@ void UMovementAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 				SetMovementSpeed(NewMovementSpeedValue);
 			}
 		}
-
 	}
 }
 

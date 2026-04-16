@@ -9,6 +9,8 @@
 
 struct FGameplayTagContainer;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FRemoveEffectEvent, TSubclassOf<UGameplayEffect>, EffectClass, float, LifeTime, float, Magnitude);
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UASC_Interaction : public UInterface
@@ -31,4 +33,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
 	FGameplayTagContainer GetActorRestrictedTags();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
+	void ReverseEffectOnActor(FGameplayAttribute& Attribute, float LifeTime, float Magnitude);
 };

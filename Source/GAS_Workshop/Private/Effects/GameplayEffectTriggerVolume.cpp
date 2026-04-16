@@ -29,6 +29,7 @@ void AGameplayEffectTriggerVolume::BeginPlay()
 	CollisionComp->OnComponentBeginOverlap.AddDynamic(this, &AGameplayEffectTriggerVolume::OverlapStarted);
 	CollisionComp->OnComponentEndOverlap.AddDynamic(this, &AGameplayEffectTriggerVolume::OverlapEnded);
 
+	if (!ApplyToActorTags.IsEmpty()) IgnoredTags.AppendTags(ApplyToActorTags);
 }
 
 
@@ -108,6 +109,7 @@ void AGameplayEffectTriggerVolume::ApplyEffectTo(AActor* Actor)
 
 		FGameplayEffectSpecHandle NewHandle = ASC->MakeOutgoingSpec(EffectClass, 0.f, EffectContext);
 		ASC->ApplyGameplayEffectSpecToSelf(*NewHandle.Data.Get());
+
 	}
 
 	// Apply these tags to Actor if specified
@@ -134,5 +136,11 @@ void AGameplayEffectTriggerVolume::RemoveEffectFrom(AActor* Actor)
 
 		ASC->RemoveActiveGameplayEffectBySourceEffect(EffectClass, nullptr, 1);
 	}
+
+	//// Remove these tags to Actor if specified
+	//if (!ApplyToActorTags.IsEmpty())
+	//{
+	//	ASC->RemoveLooseGameplayTags(ApplyToActorTags);
+	//}
 }
 

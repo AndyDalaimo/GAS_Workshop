@@ -109,9 +109,13 @@ public:
 	// Get ASC from Player
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
+	// ---------------------- Overridden from ASC_Interaction -------------------------
+
 	// Get ASC from Base Actor class with ASC_Interaction Interface (BP Native Event)
 	virtual UAbilitySystemComponent* GetActorAbilitySystemComponent_Implementation() override;
 
 	virtual FGameplayTagContainer GetActorRestrictedTags_Implementation() override;
+
+	// virtual void RemoveEffectFromActor(TSubclassOf<UGameplayEffect> EffectClass, float LifeTime, float Magnitude) ;
 
 };
