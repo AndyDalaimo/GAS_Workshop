@@ -18,19 +18,6 @@ enum class ERemoveEffectOnExit : uint8
 	KeepEffect = 2
 };
 
-USTRUCT(BlueprintType)
-struct AttributeToReverse
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Reversed Attribute")
-	FGameplayAttribute& Attribute;
-
-
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Reversed Attribute")
-	float Magnitude;
-};
 
 UCLASS()
 class GAS_WORKSHOP_API AGameplayEffectTriggerVolume : public AActor, public IASC_Interaction
@@ -55,10 +42,14 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
 		ERemoveEffectOnExit EffectUpdateOnExit = ERemoveEffectOnExit::None;
-	
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
-		ERemoveEffectOnExit EffectUpdateOnExit = ERemoveEffectOnExit::None;
-		
+		EMovementAttributes MovementAttributeToReverse;
+	
+	// Attribute Changes for Movement 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
+		float AttributeModifyValue;
+
 public:	
 	// Sets default values for this actor's properties
 	AGameplayEffectTriggerVolume();

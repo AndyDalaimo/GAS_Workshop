@@ -11,6 +11,16 @@ enum class EWorkshopAbilitySlotsEnum : uint8
 	IA_SecondaryAbility,
 };
 
+UENUM(BlueprintType)
+enum class EMovementAttributes : uint8
+{
+	MA_NONE,
+	MA_MovementSpeed,
+	MA_Stamina, 
+	MA_SprintSpeed,
+	MA_JumpPower
+};
+
 /**
  * 
  */

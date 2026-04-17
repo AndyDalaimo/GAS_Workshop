@@ -108,6 +108,7 @@ void AGameplayEffectTriggerVolume::ApplyEffectTo(AActor* Actor)
 		if (!EffectClass) continue;
 
 		FGameplayEffectSpecHandle NewHandle = ASC->MakeOutgoingSpec(EffectClass, 0.f, EffectContext);
+
 		ASC->ApplyGameplayEffectSpecToSelf(*NewHandle.Data.Get());
 
 	}
@@ -133,14 +134,18 @@ void AGameplayEffectTriggerVolume::RemoveEffectFrom(AActor* Actor)
 	{
 		if (!EffectClass) continue;
 		UE_LOG(LogTemp, Warning, TEXT("%s Effect Removed"), *FString(EffectClass->GetName()));
-
 		ASC->RemoveActiveGameplayEffectBySourceEffect(EffectClass, nullptr, 1);
 	}
 
-	//// Remove these tags to Actor if specified
-	//if (!ApplyToActorTags.IsEmpty())
-	//{
-	//	ASC->RemoveLooseGameplayTags(ApplyToActorTags);
-	//}
+	// Remove these tags to Actor if specified
+	if (!ApplyToActorTags.IsEmpty())
+	{
+		ASC->RemoveLooseGameplayTags(ApplyToActorTags);
+	}
+	
+	if (MovementAttributeToReverse != EMovementAttributes::MA_NONE)
+	{
+		IASC_Interaction::Execute_ReverseMovementEffectOnActor(Actor, MovementAttributeToReverse, AttributeModifyValue);
+	}
 }
 

@@ -159,6 +159,26 @@ FGameplayTagContainer APlayerCharacter::GetActorRestrictedTags_Implementation()
 	return RestrictedHealthTags;
 }
 
+void APlayerCharacter::ReverseMovementEffectOnActor_Implementation(EMovementAttributes MovementAttribute, float NewValue)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Attribute Modify Value:  '%.2f'"), NewValue); // TO DO -> THIS IS GRABBING NOTHING
+	switch (MovementAttribute)
+	{
+		case EMovementAttributes::MA_MovementSpeed:
+			MovementSet->SetMovementSpeed(MovementSet->GetMovementSpeed() + NewValue);
+			MovementSet->SetMovementSlow(MovementSet->GetMovementSlow() - NewValue);
+		case EMovementAttributes::MA_Stamina:
+			MovementSet->SetStamina(MovementSet->GetStamina() + NewValue);
+		case EMovementAttributes::MA_SprintSpeed:
+			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() + NewValue);
+		case EMovementAttributes::MA_JumpPower:
+			MovementSet->SetJumpPower(MovementSet->GetJumpPower() + NewValue);
+	}
+}
+
+
+
+
 // ---------------------------------------------------------------------------------------------------
 // ------------------------------- On Player's Attributes Changed ------------------------------------
 // ---------------------------------------------------------------------------------------------------

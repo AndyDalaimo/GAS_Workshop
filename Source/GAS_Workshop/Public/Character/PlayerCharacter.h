@@ -116,6 +116,6 @@ public:
 
 	virtual FGameplayTagContainer GetActorRestrictedTags_Implementation() override;
 
-	// virtual void RemoveEffectFromActor(TSubclassOf<UGameplayEffect> EffectClass, float LifeTime, float Magnitude) ;
+	virtual void ReverseMovementEffectOnActor_Implementation(EMovementAttributes MovementAttribute, float NewValue) override;
 
 };

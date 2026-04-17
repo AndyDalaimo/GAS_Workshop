@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "Utils/GlobalUtils.h"
 #include "AbilitySystemComponent.h"
 #include "ASC_Interaction.generated.h"
 
@@ -35,5 +36,5 @@ public:
 	FGameplayTagContainer GetActorRestrictedTags();
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = ASC_Interaction)
-	void ReverseEffectOnActor(FGameplayAttribute& Attribute, float LifeTime, float Magnitude);
+	void ReverseMovementEffectOnActor(EMovementAttributes MovementAttribute, float NewValue);
 };

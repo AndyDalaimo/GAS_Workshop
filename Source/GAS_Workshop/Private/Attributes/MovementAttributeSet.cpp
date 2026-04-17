@@ -15,7 +15,7 @@ UMovementAttributeSet::UMovementAttributeSet()
 	InitStamina(100.f);
 	InitMaxStamina(100.f);
 	InitSprintSpeed(250.f); // This speed will add to Current Movement Speed
-	InitJumpPower(600.f); // Default Character Movement Comp Jump Z Velocity
+	InitJumpPower(300.f); // Default Character Movement Comp Jump Z Velocity
 }
 
 
