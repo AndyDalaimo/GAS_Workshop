@@ -42,13 +42,15 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
 		ERemoveEffectOnExit EffectUpdateOnExit = ERemoveEffectOnExit::None;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
-		EMovementAttributes MovementAttributeToReverse;
 	
-	// Attribute Changes for Movement 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
+	// Movement Attribute to Reverse on effect removal. *NOTE: Can only be modified if EffectUpdateOnExit set to RemoveEffect
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties", meta = (EditCondition = "EffectUpdateOnExit==ERemoveEffectOnExit::RemoveEffect", DisplayAfter = "EffectUpdateOnExit"))
+		EMovementAttributes MovementAttributeToReverse = EMovementAttributes::MA_NONE;
+
+	// Attribute Changes for Movement. *NOTE: Can only be modified if Movement Attribute should be REVERESED above.
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties", meta = (EditCondition = "MovementAttributeToReverse!=EMovementAttributes::MA_NONE && EffectUpdateOnExit == ERemoveEffectOnExit::RemoveEffect", EditConditionHides, DisplayAfter = "MovementAttributeToReverse"))
 		float AttributeModifyValue;
+	
 
 public:	
 	// Sets default values for this actor's properties

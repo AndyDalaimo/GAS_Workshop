@@ -66,6 +66,10 @@ protected:
 	/** Jump input action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* JumpAction;
+	
+	/** Sprint input action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	UInputAction* SprintAction;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = RestrictedTags)
 	FGameplayTagContainer RestrictedHealthTags;
@@ -75,6 +79,12 @@ protected:
 
 	/** Handles look input */
 	void Look(const FInputActionValue& Value);
+
+	/** Handle Sprint Action (Tied to MovementAttributeSet) */
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	void Sprint(const FInputActionValue& Value);
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	void StopSprinting(const FInputActionValue& Value);
 
 	// Character Movement Attribute Changes
 	void OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;

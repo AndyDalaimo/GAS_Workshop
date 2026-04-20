@@ -97,6 +97,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 			EnhancedInput->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 			EnhancedInput->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		}
+		if (SprintAction)
+		{
+			EnhancedInput->BindAction(SprintAction, ETriggerEvent::Started, this, &APlayerCharacter::Sprint);
+			EnhancedInput->BindAction(SprintAction, ETriggerEvent::Completed, this, &APlayerCharacter::StopSprinting);
+		}
 	}
 
 	const FTopLevelAssetPath EnumName("/Script/GAS_Workshop.EWorkshopAbilitySlotsEnum");
@@ -134,6 +139,16 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+// Input Action calling Sprint Attribute (tied to Ability System Component Attribute Set)
+// Overridden in Blueprints
+void APlayerCharacter::Sprint_Implementation(const FInputActionValue& Value)
+{
+}
+
+void APlayerCharacter::StopSprinting_Implementation(const FInputActionValue& Value)
+{
+}
+
 
 
 // Called every frame
@@ -159,20 +174,26 @@ FGameplayTagContainer APlayerCharacter::GetActorRestrictedTags_Implementation()
 	return RestrictedHealthTags;
 }
 
+// If Character has passed through a GameplayEffectTriggerVolume and the Effect is to be remvoed, this will 
+// get the Value/Attribute modified and call the appropriate function to reset Attribute to previous state
 void APlayerCharacter::ReverseMovementEffectOnActor_Implementation(EMovementAttributes MovementAttribute, float NewValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Attribute Modify Value:  '%.2f'"), NewValue); // TO DO -> THIS IS GRABBING NOTHING
+	UE_LOG(LogTemp, Warning, TEXT("Attribute Modify Value:  '%.2f'"), NewValue); 
 	switch (MovementAttribute)
 	{
 		case EMovementAttributes::MA_MovementSpeed:
 			MovementSet->SetMovementSpeed(MovementSet->GetMovementSpeed() + NewValue);
 			MovementSet->SetMovementSlow(MovementSet->GetMovementSlow() - NewValue);
+			break;
 		case EMovementAttributes::MA_Stamina:
 			MovementSet->SetStamina(MovementSet->GetStamina() + NewValue);
+			break;
 		case EMovementAttributes::MA_SprintSpeed:
-			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() + NewValue);
+			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() - NewValue);
+			break;
 		case EMovementAttributes::MA_JumpPower:
-			MovementSet->SetJumpPower(MovementSet->GetJumpPower() + NewValue);
+			MovementSet->SetJumpPower(MovementSet->GetJumpPower() - NewValue);
+			break;
 	}
 }
 

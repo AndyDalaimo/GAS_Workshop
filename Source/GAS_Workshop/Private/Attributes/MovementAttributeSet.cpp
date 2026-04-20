@@ -88,6 +88,22 @@ void UMovementAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 			}
 		}
 	}
+	if (Data.EvaluatedData.Attribute == GetStaminaDrainAttribute())
+	{
+		const float DrainValue = GetStaminaDrain();
+		const float OldStaminaValue = GetStamina();
+		const float NewStaminaValue = FMath::Clamp(OldStaminaValue - DrainValue, 0.f, GetMaxStamina());
+
+		if (UAbilitySystemComponent* OwningAbilitySystemComponent = GetValid(GetOwningAbilitySystemComponent()))
+		{
+			if (OldStaminaValue != NewStaminaValue)
+			{
+				// Set New Samina on Character
+				SetStamina(NewStaminaValue);
+			}
+		}
+
+	}
 }
 
 void UMovementAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

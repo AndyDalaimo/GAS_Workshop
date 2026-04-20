@@ -9,6 +9,10 @@ enum class EWorkshopAbilitySlotsEnum : uint8
 {
 	IA_PrimaryAbility,
 	IA_SecondaryAbility,
+	IA_Hotbar_1,
+	IA_Hotbar_2,
+	IA_Hotbar_3,
+	IA_Hotbar_4,
 };
 
 UENUM(BlueprintType)

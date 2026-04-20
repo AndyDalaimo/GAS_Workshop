@@ -101,4 +101,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	FGameplayAttributeData MovementSlow;
 	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, MovementSlow);
+	
+	UPROPERTY(VisibleAnywhere)
+	FGameplayAttributeData StaminaDrain;
+	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, StaminaDrain);
 };
