@@ -105,4 +105,7 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	FGameplayAttributeData StaminaDrain;
 	ATTRIBUTE_ACCESSORS(UMovementAttributeSet, StaminaDrain);
+
+protected:
+	FGameplayTagContainer StaminaRegenTag;
 };
