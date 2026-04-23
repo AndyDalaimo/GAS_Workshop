@@ -10,15 +10,16 @@
 UMovementAttributeSet::UMovementAttributeSet()
 {
 	InitMovementSpeed(600.f); // Current Character Movement Comp Max Walk Speed
-	InitDefaultMovementSpeed(600.f);
+	InitDefaultMovementSpeed(500.f);
 	InitMaxMovementSpeed(1200.f);
 	InitStamina(100.f);
 	InitMaxStamina(100.f);
-	InitSprintSpeed(900.f); // This speed will add to Current Movement Speed
+	InitSprintSpeed(1200.f); // This speed will add to Current Movement Speed
 	InitJumpPower(600.f); // Default Character Movement Comp Jump Z Velocity
 
-	FGameplayTag FullStamTag = FGameplayTag::RequestGameplayTag(FName("Movement.Conditions.StaminaRegen"));
-	StaminaRegenTag.AddTag(FullStamTag);
+	FGameplayTag StamRegenTag = FGameplayTag::RequestGameplayTag(FName("Movement.Conditions.StaminaRegen"));
+	StaminaRegenTag.AddTag(StamRegenTag);
+	FullStamTag = FGameplayTag::RequestGameplayTag(FName("Movement.Conditions.FullStamina"));
 }
 
 
@@ -122,6 +123,11 @@ void UMovementAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 			if (UAbilitySystemComponent* OwningAbilitySystemComponent = GetValid(GetOwningAbilitySystemComponent()))
 			{
 				OwningAbilitySystemComponent->RemoveActiveEffectsWithAppliedTags(StaminaRegenTag);
+				if (!OwningAbilitySystemComponent->HasMatchingGameplayTag(FullStamTag))
+				{
+					OwningAbilitySystemComponent->AddLooseGameplayTag(FullStamTag);
+					OnStaminaFullRegen.Broadcast();
+				}
 			}
 		}
 	}
@@ -200,3 +206,5 @@ void UMovementAttributeSet::OnRep_JumpPower(const FGameplayAttributeData& OldVal
 	OnJumpPowerChanged.Broadcast(this, OldJumpPower, NewJumpPower);
 
 }
+
+

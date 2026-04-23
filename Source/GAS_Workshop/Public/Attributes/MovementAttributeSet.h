@@ -18,6 +18,8 @@
 // NOTE ** -> Make sure to change Delegate name to more appropriate Attribute name prefix
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FMovementAttributeChangedEvent, UAttributeSet*, AttributeSet, float, OldValue, float, NewValue);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStaminaFullRegen);
+
 /**
  * 
  */
@@ -108,4 +110,9 @@ public:
 
 protected:
 	FGameplayTagContainer StaminaRegenTag;
+	FGameplayTag FullStamTag;
+
+	UPROPERTY(BlueprintAssignable, Category = "MovementConditions")
+	FOnStaminaFullRegen OnStaminaFullRegen;
+
 };
