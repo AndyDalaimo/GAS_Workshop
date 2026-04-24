@@ -139,16 +139,11 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-// Input Action calling Sprint Attribute (tied to Ability System Component Attribute Set)
-// Overridden in Blueprints
-void APlayerCharacter::Sprint_Implementation(const FInputActionValue& Value)
+// ----------------- MOVEMENT --------------------
+
+void APlayerCharacter::StopStaminaRegen()
 {
 }
-
-void APlayerCharacter::StopSprinting_Implementation(const FInputActionValue& Value)
-{
-}
-
 
 
 // Called every frame
@@ -211,6 +206,8 @@ void APlayerCharacter::SetupMovementAttributeChanges()
 	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetSprintSpeedAttribute()).AddUObject(this, &APlayerCharacter::OnSprintSpeedAttributeChanged);
 	WorkshopAbilitySystemComp->GetGameplayAttributeValueChangeDelegate(UMovementAttributeSet::GetJumpPowerAttribute()).AddUObject(this, &APlayerCharacter::OnJumpPowerAttributeChanged);
 }
+
+
 
 
 void APlayerCharacter::OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const

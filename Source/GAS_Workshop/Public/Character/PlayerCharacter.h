@@ -15,6 +15,22 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 
+USTRUCT(BlueprintType)
+struct FDefaultGrantedAbilities
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
+	TSubclassOf<class UGameplayAbility> AbilityToGrant;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Abilities)
+	bool bHasAbilityInput;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "bHasAbilityInput==true"), Category = Abilities)
+	EWorkshopAbilitySlotsEnum AbiltiySlotInput;
+
+};
+
 UCLASS()
 class GAS_WORKSHOP_API APlayerCharacter : public ACharacter, public IAbilitySystemInterface, public IASC_Interaction
 {
@@ -74,17 +90,19 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = RestrictedTags)
 	FGameplayTagContainer RestrictedHealthTags;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = Abilities)
+	TArray<FDefaultGrantedAbilities> GrantedAbilities;
+
+
 	/** Handles movement input */
 	void Move(const FInputActionValue& Value);
 
 	/** Handles look input */
 	void Look(const FInputActionValue& Value);
 
-	/** Handle Sprint Action (Tied to MovementAttributeSet) */
+	// Movement -> Helper Functions
 	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
-	void Sprint(const FInputActionValue& Value);
-	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
-	void StopSprinting(const FInputActionValue& Value);
+	void StopStaminaRegen();
 
 	// Character Movement Attribute Changes
 	void OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;

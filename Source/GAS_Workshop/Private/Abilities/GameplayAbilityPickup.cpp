@@ -76,7 +76,8 @@ void AGameplayAbilityPickup::OverlapEnded(UPrimitiveComponent* OverlappedCompone
 
 }
 
-// Clear the Ability in the Input 
+// Clear the Ability in the Input NOTE -> Not sure if it is neccessary to clear the ability, as it would have to be overridden to be given anyways. 
+// Perhaps wait for User input, to see if they want the ability cleared / overwritten
 void AGameplayAbilityPickup::GrantAbilityTo(AActor* Actor)
 {
 	if (!AbilityToGrantActor) return;
