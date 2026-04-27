@@ -141,7 +141,15 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 
 // ----------------- MOVEMENT --------------------
 
-void APlayerCharacter::StopStaminaRegen()
+void APlayerCharacter::StopStaminaRegen_Implementation()
+{
+}
+
+void APlayerCharacter::Sprint_Implementation(const FInputActionValue& Value)
+{
+}
+
+void APlayerCharacter::StopSprinting_Implementation(const FInputActionValue& Value)
 {
 }
 

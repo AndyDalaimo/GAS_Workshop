@@ -104,6 +104,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
 	void StopStaminaRegen();
 
+	/** Handle Sprint Action (Tied to MovementAttributeSet) */
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	void Sprint(const FInputActionValue& Value);
+	UFUNCTION(BlueprintNativeEvent, Category = "Movement")
+	void StopSprinting(const FInputActionValue& Value);
+
 	// Character Movement Attribute Changes
 	void OnMovementSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) const;
 	void OnStaminaAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData);

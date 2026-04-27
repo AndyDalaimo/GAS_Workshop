@@ -29,6 +29,9 @@ protected:
 		UBoxComponent* CollisionComp;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
+		FName EffectName;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
 		FGameplayTagContainer IgnoredTags;
 		
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Trigger Volume Properties")
