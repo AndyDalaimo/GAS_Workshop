@@ -192,10 +192,10 @@ void APlayerCharacter::ReverseMovementEffectOnActor_Implementation(EMovementAttr
 			MovementSet->SetStamina(MovementSet->GetStamina() + NewValue);
 			break;
 		case EMovementAttributes::MA_SprintSpeed:
-			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() - NewValue);
+			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() + NewValue);
 			break;
 		case EMovementAttributes::MA_JumpPower:
-			MovementSet->SetJumpPower(MovementSet->GetJumpPower() - NewValue);
+			MovementSet->SetJumpPower(MovementSet->GetJumpPower() + NewValue);
 			break;
 	}
 }
