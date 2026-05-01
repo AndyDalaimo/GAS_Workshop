@@ -20,7 +20,8 @@ enum class EMovementAttributes : uint8
 {
 	MA_NONE,
 	MA_MovementSpeed,
-	MA_Stamina, 
+	MA_Stamina,
+	MA_MaxStamina,
 	MA_SprintSpeed,
 	MA_JumpPower
 };

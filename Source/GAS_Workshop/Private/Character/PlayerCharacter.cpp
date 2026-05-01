@@ -191,11 +191,14 @@ void APlayerCharacter::ReverseMovementEffectOnActor_Implementation(EMovementAttr
 		case EMovementAttributes::MA_Stamina:
 			MovementSet->SetStamina(MovementSet->GetStamina() + NewValue);
 			break;
+		case EMovementAttributes::MA_MaxStamina:
+			MovementSet->SetMaxStamina(MovementSet->GetMaxStamina() - NewValue);
+			break;
 		case EMovementAttributes::MA_SprintSpeed:
-			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() + NewValue);
+			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() - NewValue);
 			break;
 		case EMovementAttributes::MA_JumpPower:
-			MovementSet->SetJumpPower(MovementSet->GetJumpPower() + NewValue);
+			MovementSet->SetJumpPower(MovementSet->GetJumpPower() - NewValue);
 			break;
 	}
 }
@@ -227,6 +230,8 @@ void APlayerCharacter::OnStaminaAttributeChanged(const FOnAttributeChangeData& O
 {
 	Stamina = GetStaminaAttribute();
 }
+
+
 
 void APlayerCharacter::OnSprintSpeedAttributeChanged(const FOnAttributeChangeData& OnAttributeChangeData) 
 {

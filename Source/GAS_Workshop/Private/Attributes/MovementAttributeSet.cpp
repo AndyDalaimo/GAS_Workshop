@@ -56,8 +56,8 @@ void UMovementAttributeSet::PostAttributeChange(const FGameplayAttribute& Attrib
 	}
 	else if (Attribute == GetMaxStaminaAttribute())
 	{
-		const float CurrentStamina = GetStamina();
-		OnStaminaChanged.Broadcast(this, CurrentStamina, CurrentStamina);
+		// const float CurrentMaxStamina = GetMaxStamina();
+		OnMaxStaminaChanged.Broadcast(this, OldValue, NewValue);
 	}
 	else if (Attribute == GetSprintSpeedAttribute())
 	{
@@ -184,8 +184,9 @@ void UMovementAttributeSet::OnRep_MaxStamina(const FGameplayAttributeData& OldVa
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UMovementAttributeSet, MaxStamina, OldValue);
 
-	const float CurrentStamina = GetStamina();
-	OnStaminaChanged.Broadcast(this, CurrentStamina, CurrentStamina);
+	const float OldMaxStamina = OldValue.GetCurrentValue();
+	const float NewMaxStamina = GetMaxStamina();
+	OnMaxStaminaChanged.Broadcast(this, OldMaxStamina, NewMaxStamina);
 }
 
 void UMovementAttributeSet::OnRep_SprintSpeed(const FGameplayAttributeData& OldValue)

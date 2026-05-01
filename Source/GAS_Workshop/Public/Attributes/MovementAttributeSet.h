@@ -94,6 +94,9 @@ public:
 	FMovementAttributeChangedEvent OnStaminaChanged;
 
 	UPROPERTY(BlueprintAssignable)
+	FMovementAttributeChangedEvent OnMaxStaminaChanged;
+
+	UPROPERTY(BlueprintAssignable)
 	FMovementAttributeChangedEvent OnSprintSpeedChanged;
 
 	UPROPERTY(BlueprintAssignable)
