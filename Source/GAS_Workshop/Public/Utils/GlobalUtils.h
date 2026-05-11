@@ -2,7 +2,9 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
+#include "GlobalUtils.generated.h"
 
 UENUM(BlueprintType)
 enum class EWorkshopAbilitySlotsEnum : uint8
@@ -24,6 +26,26 @@ enum class EMovementAttributes : uint8
 	MA_MaxStamina,
 	MA_SprintSpeed,
 	MA_JumpPower
+};
+
+USTRUCT(BlueprintType)
+struct FInventoryItem
+{
+	GENERATED_USTRUCT_BODY()
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryItemStruct")
+	FText ItemName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryItemStruct")
+	int ItemID;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryItemStruct")
+	UTexture2D* ItemIcon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "InventoryItemStruct")
+	int Quantity;
+
 };
 
 /**
