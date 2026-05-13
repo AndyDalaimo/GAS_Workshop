@@ -36,40 +36,52 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 // Add item to existing InventoryItems. If ItemID exists, add to existing quantity. 
 void UInventoryComponent::AddItem(FInventoryItem newitem)
 {
+	int it = 0;
 	for (FInventoryItem item : InventoryItems)
 	{
 		if (item.ItemID == newitem.ItemID) // Item exists in Inventory
 		{
-			item.Quantity += newitem.Quantity;
+			InventoryItems[it].Quantity += newitem.Quantity;
+			UE_LOG(LogTemp, Warning, TEXT("Added Item ID #: %d New Quantity: %d"), newitem.ItemID, InventoryItems[it].Quantity);
 			return;
 		}
+		it++;
 	}
-
 	InventoryItems.Push(newitem);
+	UE_LOG(LogTemp, Warning, TEXT("Added %d amount of Item to Inventory. ID #: %d"), newitem.Quantity, newitem.ItemID);
 	SortInventory();
 }
 
 // Remove indicated quantity. If quantity is -1, remove entire stack.
-void UInventoryComponent::RemoveItem(int ItemID, int quantityToRemove)
+void UInventoryComponent::RemoveItem(int ID, int quantityToRemove)
 {
+	int it = 0;
 
 	for (FInventoryItem item : InventoryItems)
 	{
-		if (item.ItemID == ItemID)
+		if (item.ItemID == ID)
 		{
 			if (quantityToRemove == -1)
 			{
-				InventoryItems.Remove(item);
+				InventoryItems.RemoveAt(it, EAllowShrinking::Yes);
 			}
 			else {
 				item.Quantity -= quantityToRemove;
 			}
 		}
+		it++;
 	}
 }
+
 
 
 // TODO -> Sort Items on things like Category, Quantity, Cost, etc.
 void UInventoryComponent::SortInventory()
 {
+}
+
+// 
+void UInventoryComponent::AddPickupToInventory_Implementation(FInventoryItem ItemData)
+{
+	AddItem(ItemData);
 }

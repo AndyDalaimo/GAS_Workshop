@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Attributes/MovementAttributeSet.h"
+#include "Components/InventoryComponent.h"
 #include "Framework/Interfaces/ASC_Interaction.h"
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
@@ -48,6 +49,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Abilities)
 	TObjectPtr<class UMovementAttributeSet> MovementSet;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory)
+	UInventoryComponent* InventoryComp;
 
 	// Movement Attribute Changes reflected on Character custom properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "MovementProperties")

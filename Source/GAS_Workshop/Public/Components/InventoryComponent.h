@@ -5,12 +5,13 @@
 #include "CoreMinimal.h"
 #include "Utils/GlobalUtils.h"
 #include "Components/ActorComponent.h"
+#include "Framework/Interfaces/InventoryInterface.h"
 #include "InventoryComponent.generated.h"
 
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class GAS_WORKSHOP_API UInventoryComponent : public UActorComponent
+class GAS_WORKSHOP_API UInventoryComponent : public UActorComponent, public IInventoryInterface
 {
 	GENERATED_BODY()
 
@@ -40,6 +41,9 @@ public:
 
 	// Remove indicated quantity. If quantity is -1, remove entire stack.
 	UFUNCTION(BlueprintCallable)
-	void RemoveItem(int ItemID, int quantityToRemove = -1);
+	void RemoveItem(int ID, int quantityToRemove = -1);
+
+	// Overridden InventoryInterface Functions
+	virtual void AddPickupToInventory_Implementation(FInventoryItem ItemData) override;
 		
 };
