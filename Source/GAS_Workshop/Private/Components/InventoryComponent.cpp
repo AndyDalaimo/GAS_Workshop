@@ -34,21 +34,21 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 }
 
 // Add item to existing InventoryItems. If ItemID exists, add to existing quantity. 
-void UInventoryComponent::AddItem(FInventoryItem newitem)
+void UInventoryComponent::AddItem(FInventoryItem newItem)
 {
 	int it = 0;
 	for (FInventoryItem item : InventoryItems)
 	{
-		if (item.ItemID == newitem.ItemID) // Item exists in Inventory
+		if (item.ItemID == newItem.ItemID) // Item exists in Inventory
 		{
-			InventoryItems[it].Quantity += newitem.Quantity;
-			UE_LOG(LogTemp, Warning, TEXT("Added Item ID #: %d New Quantity: %d"), newitem.ItemID, InventoryItems[it].Quantity);
+			InventoryItems[it].Quantity += newItem.Quantity;
+			UE_LOG(LogTemp, Warning, TEXT("Added Item ID #: %d New Quantity: %d"), newItem.ItemID, InventoryItems[it].Quantity);
 			return;
 		}
 		it++;
 	}
-	InventoryItems.Push(newitem);
-	UE_LOG(LogTemp, Warning, TEXT("Added %d amount of Item to Inventory. ID #: %d"), newitem.Quantity, newitem.ItemID);
+	InventoryItems.Push(newItem);
+	UE_LOG(LogTemp, Warning, TEXT("Added %d amount of Item to Inventory. ID #: %d"), newItem.Quantity, newItem.ItemID);
 	SortInventory();
 }
 

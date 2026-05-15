@@ -37,9 +37,10 @@ public:
 
 	// Add item to existing InventoryItems. If ItemID exists, add to existing quantity. 
 	UFUNCTION(BlueprintCallable)
-	void AddItem(FInventoryItem newitem);
+	void AddItem(FInventoryItem newItem);
 
-	// Remove indicated quantity. If quantity is -1, remove entire stack.
+	// Remove indicated quantity
+	// *NOTE* If quantity is -1, remove entire stack.
 	UFUNCTION(BlueprintCallable)
 	void RemoveItem(int ID, int quantityToRemove = -1);
 

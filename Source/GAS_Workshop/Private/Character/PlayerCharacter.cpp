@@ -193,7 +193,7 @@ void APlayerCharacter::ReverseMovementEffectOnActor_Implementation(EMovementAttr
 			MovementSet->SetStamina(MovementSet->GetStamina() + NewValue);
 			break;
 		case EMovementAttributes::MA_MaxStamina:
-			MovementSet->SetMaxStamina(MovementSet->GetMaxStamina() - NewValue);
+			MovementSet->SetMaxStamina(MovementSet->GetMaxStamina() + NewValue);
 			break;
 		case EMovementAttributes::MA_SprintSpeed:
 			MovementSet->SetSprintSpeed(MovementSet->GetSprintSpeed() - NewValue);
