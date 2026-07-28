@@ -43,4 +43,8 @@ public:
 	void OverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	UFUNCTION(BlueprintNativeEvent)
+	void PickupFXCue();
+	void PickupFXCue_Implementation();
+
 };

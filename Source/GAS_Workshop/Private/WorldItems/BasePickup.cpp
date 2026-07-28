@@ -43,10 +43,16 @@ void ABasePickup::OverlapStarted(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		UE_LOG(LogTemp, Warning, TEXT("PICKING UP ITEM FOR INVENTORY"));
 		IInventoryInterface::Execute_AddPickupToInventory(OC, ItemData);
+		PickupFXCue(); // FX triggered in BP
 	}
 }
 
 void ABasePickup::OverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+}
+
+// To be overridden in BP. FX Cues for Pickup
+void ABasePickup::PickupFXCue_Implementation()
 {
 }
 
